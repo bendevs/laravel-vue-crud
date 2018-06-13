@@ -3,11 +3,13 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Thought;
 
 class ThoughtController extends Controller
 {
     public function __construct()
     {
+        // Declara que necesita autentificarse para usar este controlador
         $this->middleware('auth');
     }
 
@@ -18,7 +20,7 @@ class ThoughtController extends Controller
      */
     public function index()
     {
-        //
+        return Tought::All();
     }
 
     /**
@@ -29,18 +31,10 @@ class ThoughtController extends Controller
      */
     public function store(Request $request)
     {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
+        $thought =  new Thought();
+        $thought->description =  $request->description;
+        $thought->user_id = auth()->id();
+        $thought->save();
     }
 
     /**
@@ -52,7 +46,9 @@ class ThoughtController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $thought = Thought::find($id);
+        $thought->description = $request->description;
+        $thought->save();
     }
 
     /**
@@ -63,6 +59,7 @@ class ThoughtController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $thought = Thought::find($id);
+        $thought->delete();
     }
 }
