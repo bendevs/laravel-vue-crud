@@ -13999,10 +13999,7 @@ module.exports = __webpack_require__(49);
 __webpack_require__(15);
 
 window.Vue = __webpack_require__(37);
-<<<<<<< HEAD
-=======
 axios = __webpack_require__(6);
->>>>>>> vuebackend
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
