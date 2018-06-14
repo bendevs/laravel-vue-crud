@@ -9,13 +9,7 @@
 export default {
     data() {
         return {
-            thoughts: [
-                {
-                    id: 1,
-                    description: 'Some description',
-                    created_at: '12/Junio/2018'
-                }
-            ]
+            thoughts: []
         }
     },
     methods: {
@@ -30,6 +24,10 @@ export default {
         }
     },
     mounted() {
+        let local = this
+        axios.get('thoughts').then(function (response) {
+            local.thoughts = response.data
+        })
         console.log("Component mounted.");
     }
 };
