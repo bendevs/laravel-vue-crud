@@ -32,14 +32,25 @@ export default {
     },
     methods:{
         onClickDelete(){
-            this.$emit('delete')
+            const local = this
+            axios.delete(`thoughts/${this.thought.id}`).then(function () {
+                local.$emit('delete')  
+            })
         },
         onClickEdit() {
             this.editMode = true
         },
         onClickUpdate(thought) {
-            this.editMode = false
-            this.$emit('update', thought)
+            const local = this
+            const params = {
+                description: this.thought.description
+            }
+            axios.put(`thoughts/${this.thought.id}`, params).then(function (response) {
+                local.editMode = false
+                const thought = response.data
+                local.$emit('update', thought)
+            })
+            
         }
     }
 };

@@ -20,7 +20,7 @@ class ThoughtController extends Controller
      */
     public function index()
     {
-        return Tought::All();
+        return Thought::All();
     }
 
     /**
@@ -35,6 +35,8 @@ class ThoughtController extends Controller
         $thought->description =  $request->description;
         $thought->user_id = auth()->id();
         $thought->save();
+
+        return $thought;
     }
 
     /**
@@ -49,6 +51,8 @@ class ThoughtController extends Controller
         $thought = Thought::find($id);
         $thought->description = $request->description;
         $thought->save();
+
+        return $thought;
     }
 
     /**

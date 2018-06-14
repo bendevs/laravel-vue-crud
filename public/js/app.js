@@ -13999,6 +13999,10 @@ module.exports = __webpack_require__(49);
 __webpack_require__(15);
 
 window.Vue = __webpack_require__(37);
+<<<<<<< HEAD
+=======
+axios = __webpack_require__(6);
+>>>>>>> vuebackend
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -47349,14 +47353,24 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
     methods: {
         onClickDelete: function onClickDelete() {
-            this.$emit('delete');
+            var local = this;
+            axios.delete('thoughts/' + this.thought.id).then(function () {
+                local.$emit('delete');
+            });
         },
         onClickEdit: function onClickEdit() {
             this.editMode = true;
         },
         onClickUpdate: function onClickUpdate(thought) {
-            this.editMode = false;
-            this.$emit('update', thought);
+            var local = this;
+            var params = {
+                description: this.thought.description
+            };
+            axios.put('thoughts/' + this.thought.id, params).then(function (response) {
+                local.editMode = false;
+                var thought = response.data;
+                local.$emit('update', thought);
+            });
         }
     }
 });
@@ -47542,13 +47556,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
     methods: {
         addThought: function addThought() {
-            var thought = {
-                id: Math.random(),
-                description: this.description,
-                created_at: '12/junio/2018'
+            var local = this;
+            var params = {
+                description: this.description
             };
-            this.$emit('new', thought);
             this.description = '';
+            axios.post('thoughts', params).then(function (response) {
+                var thought = response.data;
+                local.$emit('new', thought);
+            });
         }
     }
 });
@@ -47700,11 +47716,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
         return {
-            thoughts: [{
-                id: 1,
-                description: 'Some description',
-                created_at: '12/Junio/2018'
-            }]
+            thoughts: []
         };
     },
 
@@ -47720,6 +47732,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         }
     },
     mounted: function mounted() {
+        var local = this;
+        axios.get('thoughts').then(function (response) {
+            local.thoughts = response.data;
+        });
         console.log("Component mounted.");
     }
 });

@@ -31,13 +31,15 @@ export default {
     },
     methods:{
         addThought(){
-            let thought = {
-                id: Math.random(),
-                description: this.description,
-                created_at: '12/junio/2018'
+            const local = this
+            const params = {
+                description: this.description
             }
-            this.$emit('new',thought)
-            this.description = ''
+            this.description = '';
+            axios.post('thoughts', params).then( function (response) {
+                const thought = response.data
+                local.$emit('new',thought)
+            })
         }
     }
 };
